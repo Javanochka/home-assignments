@@ -20,12 +20,13 @@ from _corners import dump, load, draw, without_short_tracks, create_cli
 
 
 MIN_DISTANCE=30
+P_SIZE=5
 
 # params for ShiTomasi corner detection
-feature_params = dict(maxCorners=20,
+feature_params = dict(maxCorners=1000,
                       qualityLevel=0.1,
                       minDistance=MIN_DISTANCE,
-                      blockSize=5,
+                      blockSize=P_SIZE,
                       useHarrisDetector=False)
 
 # Parameters for lucas kanade optical flow
@@ -45,7 +46,7 @@ class CornerUpdater:
     def extend(self, id, point):
         self.ids = np.concatenate([self.ids, [id]])
         self.points = np.concatenate([self.points, [point]])
-        self.sizes = np.concatenate([self.sizes, [10]])
+        self.sizes = np.concatenate([self.sizes, [P_SIZE]])
 
     def update(self, extra_points, start_id):
         cur_id = start_id
@@ -84,7 +85,7 @@ def _build_impl(frame_sequence: pims.FramesSequence,
     corners = CornerUpdater(
         p0_ids,
         p0,
-        np.array([10] * len(p0))
+        np.array([P_SIZE] * len(p0))
     )
     last_id = len(p0)
     builder.set_corners_at_frame(0, FrameCorners(*corners.get()))
