@@ -19,7 +19,7 @@ from _corners import FrameCorners, CornerStorage, StorageImpl
 from _corners import dump, load, draw, without_short_tracks, create_cli
 
 
-MIN_DISTANCE=30
+MIN_DISTANCE=20
 P_SIZE=5
 
 # params for ShiTomasi corner detection
